@@ -1,5 +1,65 @@
+# Autoscale exercise
 
-# Contributing
+In this exercise, you'll clone a GIT repository and run a script that sets-up an Azure Spring Cloud application and Azure Database for MySQL.
+The script deploys a well-known PetClinic microservice application and is built around small independent services, communicating over HTTP via a REST API.
+
+## The sample microservice application
+
+The script deploys a well-known PetClinic microservice application and is built around small independent services, communicating over HTTP via a REST API.
+The sample is decomposed into four core microservices. All of them are independently deployable, organized by business domains.
+
+- Customers service: Contains general user input logic and validation including pets and owners information (Name, Address, City, Telephone).
+- Visits service: Stores and shows visits information for each pet.
+- Vets service: Stores and shows Veterinarians' information, including names and specialties.
+- API Gateway: A single entry point into the system, used to handle requests and route them to an appropriate service, and aggregate the results.
+
+## Set up the sample microservice application
+
+In a web browser, open https://shell.azure.com in a new browser window.
+Select "Bash" mode in the top right-hand side.
+Next, in the bash window, run the following commands to clone the sample repository and open the built-in Azure editor:
+
+   ```bash
+   git clone https://github.com/microsoftdocs/mslearn-autoscale-java
+   cd mslearn-autoscale-java
+   code deployPetClinicApp.sh
+   ```
+
+## Set up and run the Setup script
+
+When you run the above command, a window will pop up with the file `deployPetClinicApp.sh` ready to be edited in the built-in Azure editor.
+
+1. At the top of the `deployPetClinicApp.sh` file, edit the following variables to customize the scripts parameters for your environment. For all resource names use lowercase letters - you may use hyphens and numbers also:
+
+   | Variable | Description |
+   |-|-|
+   | resource-group | Provide a new or existing resource group name |
+   | region | The Azure region you'll use. You can use `westeurope` or `centralus`, but we recommend that you use a region close to where you live and that also support Azure Spring Cloud. To see the full list of available regions, visit the **Azure Spring Cloud Availability by Region** in the Summary unit at the end of this module |
+   | spring-cloud-service | Name of your Azure Spring Cloud instance |
+   | mysql-server-name | The name of your MySQL server. It should be unique across Azure |
+   | mysql-server-admin-name | Username for the MySQL Administrator. The admin name can't be "azure-superuser", "admin", "administrator", "root", "guest, or "public" |
+   | mysql-server-admin-password | A new password for the server admin user. The password must be 8 to 128 characters long and contain a combination of uppercase or lowercase letters, numbers, and non-alphanumeric characters (!, $, #, %, and so on).|
+   | log-analytics | Name of your Azure Log Analytics workspace |
+
+2. Save the file by selecting the ... action panel in the top right of the editor and select "Save".
+
+3. Close the editor - open the ... action panel in the top right of the editor and select "Close Editor".
+
+4. Don't close the Azure Cloud Shell, as next, we'll run the setup script.
+
+## Run the setup script
+
+The script takes 30-45 minutes to run and includes the creation of an Azure spring Cloud and a MySQL instance. This sample script also sets-up autoscale configuration for your microservices.
+
+In the already open Azure Cloud Shell, run the below shell script. Leave the browser window and Azure Cloud Shell open while running. Store the URL when the script completes:
+
+```bash
+bash deployPetClinicApp.sh
+```
+
+In a web browser, navigate to the URL of your returned by the script to open the Pet Clinic microservice application.
+
+## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
@@ -13,7 +73,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-# Legal Notices
+## Legal Notices
 
 Microsoft and any contributors grant you a license to the Microsoft documentation and other content
 in this repository under the [Creative Commons Attribution 4.0 International Public License](https://creativecommons.org/licenses/by/4.0/legalcode),
