@@ -4,7 +4,7 @@ set -e
 # ==== Customize the below for your environment====
 resource_group='your-resource-group-name'
 region='centralus'
-spring_cloud_service='your-azure-spring-cloud-name'
+spring_apps_service='your-azure-spring-cloud-name'
 mysql_server_name='your-sql-server-name'
 mysql_server_admin_name='your-sql-server-admin-name'
 mysql_server_admin_password='your-password'
@@ -26,7 +26,7 @@ trap 'error_handler $? ${LINENO}' ERR
 #########################################################
 
 #Add Required extensions
-az extension add --name spring-cloud
+#az extension add --name spring-cloud
 
 #set variables
 DEVBOX_IP_ADDRESS=$(curl ifconfig.me)
@@ -102,18 +102,18 @@ az mysql server firewall-rule create \
     --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
 
 printf "\n"
-printf "Creating the Spring Cloud: ${spring_cloud_service}"
+printf "Creating the Spring Apps: ${spring_apps_service}"
 printf "\n"
 
 az spring-cloud create \
     --resource-group ${resource_group} \
-    --name ${spring_cloud_service} \
+    --name ${spring_apps_service} \
     --location ${region} \
     --sku standard
 
-az configure --defaults group=${resource_group} location=${region} spring-cloud=${spring_cloud_service}
+az configure --defaults group=${resource_group} location=${region} spring-cloud=${spring_apps_service}
 
-az spring-cloud config-server set --config-file application.yml --name ${spring_cloud_service}
+az spring-cloud config-server set --config-file application.yml --name ${spring_apps_service}
 
 printf "\n"
 printf "Creating the microservice apps"
@@ -149,7 +149,7 @@ az mysql server configuration set --name time_zone \
   --server ${mysql_server_name} --value "US/Central"
 
 printf "\n"
-printf "Deploying the apps to Spring Cloud"
+printf "Deploying the apps to Spring Apps"
 printf "\n"
 
 az spring-cloud app deploy --name ${api_gateway} \
@@ -197,7 +197,7 @@ export LOG_ANALYTICS_RESOURCE_ID=$(az monitor log-analytics workspace show \
     --resource-group ${resource_group} \
     --workspace-name ${log_analytics} | jq -r '.id')
 
-export WEBAPP_RESOURCE_ID=$(az spring-cloud show --name ${spring_cloud_service} --resource-group ${resource_group} | jq -r '.id')
+export WEBAPP_RESOURCE_ID=$(az spring-cloud show --name ${spring_apps_service} --resource-group ${resource_group} | jq -r '.id')
 
 export CUSTOMER_RESOURCE_ID=$(az spring-cloud app deployment show --name default --app ${customers_service} --resource-group ${resource_group} | jq -r '.id')
 
@@ -276,16 +276,16 @@ az monitor diagnostic-settings create --name "send-autoscale-logs-and-metrics-to
        ]'
 
 printf "\n"
-printf "Testing the deployed customers-service at https://${spring_cloud_service}-api-gateway.azuremicroservices.io/api/customer/owners"
+printf "Testing the deployed customers-service at https://${spring_apps_service}-api-gateway.azuremicroservices.io/api/customer/owners"
 printf "\n"
 
 for i in `seq 1 30`; 
 do
-curl -H 'Cache-Control: no-cache' https://${spring_cloud_service}-api-gateway.azuremicroservices.io/api/customer/owners?$(date +%s)
+curl -H 'Cache-Control: no-cache' https://${spring_apps_service}-api-gateway.azuremicroservices.io/api/customer/owners?$(date +%s)
 done
 
 printf "\n"
 printf "Completed testing the deployed application"
 printf "\n"
-printf "https://${spring_cloud_service}-api-gateway.azuremicroservices.io"
+printf "https://${spring_apps_service}-api-gateway.azuremicroservices.io"
 printf "\n"
