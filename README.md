@@ -1,6 +1,6 @@
 # Autoscale exercise
 
-In this exercise, you'll clone a GIT repository and run a script that sets-up an Azure Spring Cloud application and Azure Database for MySQL.
+In this exercise, you'll clone a GIT repository and run a script that sets-up an Azure Spring Apps application and Azure Database for MySQL.
 The script deploys a well-known PetClinic microservice application and is built around small independent services, communicating over HTTP via a REST API.
 
 ## The sample microservice application
@@ -33,13 +33,13 @@ When you run the above command, a window will pop up with the file `deployPetCli
 
    | Variable | Description |
    |-|-|
-   | resource-group | Provide a new or existing resource group name |
-   | region | The Azure region you'll use. You can use `westeurope` or `centralus`, but we recommend that you use a region close to where you live and that also support Azure Spring Cloud. To see the full list of available regions, visit the **Azure Spring Cloud Availability by Region** in the Summary unit at the end of this module |
-   | spring-cloud-service | Name of your Azure Spring Cloud instance |
-   | mysql-server-name | The name of your MySQL server. It should be unique across Azure |
-   | mysql-server-admin-name | Username for the MySQL Administrator. The admin name can't be "azure-superuser", "admin", "administrator", "root", "guest, or "public" |
-   | mysql-server-admin-password | A new password for the server admin user. The password must be 8 to 128 characters long and contain a combination of uppercase or lowercase letters, numbers, and non-alphanumeric characters (!, $, #, %, and so on).|
-   | log-analytics | Name of your Azure Log Analytics workspace |
+   | resource_group | Provide a new or existing resource group name |
+   | region | The Azure region you'll use. You can use `westeurope` or `centralus`, but we recommend that you use a region close to where you live and that also support Azure Spring Apps. To see the full list of available regions, visit the **Azure Spring Apps Availability by Region** in the Summary unit at the end of this module |
+   | spring_apps_service | Name of your Azure Spring Apps instance |
+   | mysql_server_name | The name of your MySQL server. It should be unique across Azure |
+   | mysql_server_admin_name | Username for the MySQL Administrator. The admin name can't be "azure-superuser", "admin", "administrator", "root", "guest, or "public" |
+   | mysql_server_admin_password | A new password for the server admin user. The password must be 8 to 128 characters long and contain a combination of uppercase or lowercase letters, numbers, and non-alphanumeric characters (!, $, #, %, and so on).|
+   | log_analytics | Name of your Azure Log Analytics workspace |
 
 2. Save the file by selecting the ... action panel in the top right of the editor and select "Save".
 
@@ -49,7 +49,7 @@ When you run the above command, a window will pop up with the file `deployPetCli
 
 ## Run the setup script
 
-The script takes 30-45 minutes to run and includes the creation of an Azure spring Cloud and a MySQL instance. This sample script also sets-up autoscale configuration for your microservices.
+The script takes 30-45 minutes to run and includes the creation of an Azure Spring Apps and a MySQL instance. This sample script also sets-up autoscale configuration for your microservices.
 
 In the already open Azure Cloud Shell, run the below shell script. Leave the browser window and Azure Cloud Shell open while running. Store the URL when the script completes:
 
