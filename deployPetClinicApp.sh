@@ -26,7 +26,7 @@ trap 'error_handler $? ${LINENO}' ERR
 #########################################################
 
 #Add Required extensions
-#az extension add --name spring-cloud
+az extension add --name spring-cloud
 
 #set variables
 DEVBOX_IP_ADDRESS=$(curl ifconfig.me)
