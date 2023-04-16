@@ -43,7 +43,7 @@ printf "\n"
 printf "Cloning the sample project: https://github.com/azure-samples/spring-petclinic-microservices"
 printf "\n"
 
-git clone https://github.com/azure-samples/spring-petclinic-microservices
+git clone -b 2.7.6 --single-branch https://github.com/Azure-Samples/spring-petclinic-microservices.git
 cd spring-petclinic-microservices
 mvn clean package -DskipTests -Denv=cloud
 
